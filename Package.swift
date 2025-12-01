@@ -5,7 +5,6 @@ import Foundation
 import PackageDescription
 
 var swiftSettings: [SwiftSetting] = [
-    .define("GRDBCIPHER"),
     .define("GRDBCUSTOMSQLITE"),
     .define("SQLITE_ENABLE_FTS5"),
 ]
@@ -72,7 +71,6 @@ let package = Package(
                 .define("GRDBCUSTOMSQLITE")
             ],
             swiftSettings: swiftSettings + [
-                .define("GRDBCIPHER"),
                 .define("GRDBCUSTOMSQLITE")
             ]
         ),
