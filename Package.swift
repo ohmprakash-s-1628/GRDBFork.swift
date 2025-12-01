@@ -54,7 +54,9 @@ let package = Package(
             name: "GRDBSQLite",
             dependencies: [
                 .product(name: "CSQLCipher", package: "SQLCipher")
-            ]
+            ],
+            path: ".",
+            exclude: ["GRDB", "Tests"]
         ),
         .target(
             name: "GRDB",
