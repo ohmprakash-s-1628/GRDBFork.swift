@@ -2,11 +2,10 @@
 #if GRDBCIPHER
 import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 #elseif GRDBCUSTOMSQLITE
-import SQLite3               // ← Custom user-provided sqlite build
+import SQLCipher               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
 #endif
-
 
 /// A type that can decode itself from the low-level C interface to
 /// SQLite results.

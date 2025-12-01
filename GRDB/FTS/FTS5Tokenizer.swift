@@ -3,11 +3,10 @@
 #if GRDBCIPHER
 import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 #elseif GRDBCUSTOMSQLITE
-import SQLite3               // ← Custom user-provided sqlite build
+import SQLCipher               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
 #endif
-
 import Foundation
 
 /// A low-level SQLite function that lets FTS5Tokenizer notify tokens.
