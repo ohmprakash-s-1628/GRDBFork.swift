@@ -1,12 +1,11 @@
 // Import C SQLite functions
-#if SWIFT_PACKAGE
-import GRDBSQLite
-#elseif GRDBCIPHER
+#if GRDBCIPHER
 import SQLCipher
+#elseif SWIFT_PACKAGE
+import GRDBSQLite
 #elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
 import SQLite3
 #endif
-
 /// A format that prints one line per database row, formatting values
 /// as SQL literals.
 ///

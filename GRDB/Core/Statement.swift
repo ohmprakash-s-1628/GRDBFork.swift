@@ -1,12 +1,11 @@
 // Import C SQLite functions
-#if SWIFT_PACKAGE
-import GRDBSQLite
-#elseif GRDBCIPHER
+#if GRDBCIPHER
 import SQLCipher
+#elseif SWIFT_PACKAGE
+import GRDBSQLite
 #elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
 import SQLite3
 #endif
-
 import Foundation
 
 /// A raw SQLite statement, suitable for the SQLite C API.

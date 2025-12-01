@@ -1,12 +1,11 @@
 // Import C SQLite functions
-#if SWIFT_PACKAGE
-import GRDBSQLite
-#elseif GRDBCIPHER
+#if GRDBCIPHER
 import SQLCipher
+#elseif SWIFT_PACKAGE
+import GRDBSQLite
 #elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
 import SQLite3
 #endif
-
 extension Optional: StatementBinding where Wrapped: StatementBinding {
     public func bind(to sqliteStatement: SQLiteStatement, at index: CInt) -> CInt {
         switch self {
