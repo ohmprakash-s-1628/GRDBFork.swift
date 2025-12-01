@@ -6,7 +6,10 @@ import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 import SQLite3               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
-#endif/// An instance of WALSnapshot records the state of a WAL mode database for some
+#endif
+
+
+/// An instance of WALSnapshot records the state of a WAL mode database for some
 /// specific point in history.
 ///
 /// We use `WALSnapshot` to help `ValueObservation` check for changes

@@ -5,7 +5,9 @@ import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 import SQLite3               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
-#endifextension Optional: StatementBinding where Wrapped: StatementBinding {
+#endif
+
+extension Optional: StatementBinding where Wrapped: StatementBinding {
     public func bind(to sqliteStatement: SQLiteStatement, at index: CInt) -> CInt {
         switch self {
         case .none:

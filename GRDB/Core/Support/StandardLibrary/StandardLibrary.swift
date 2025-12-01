@@ -5,7 +5,9 @@ import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 import SQLite3               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
-#endif// MARK: - Value Types
+#endif
+
+// MARK: - Value Types
 
 /// Bool adopts DatabaseValueConvertible and StatementColumnConvertible.
 extension Bool: DatabaseValueConvertible, StatementColumnConvertible {

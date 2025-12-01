@@ -5,7 +5,9 @@ import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 import SQLite3               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
-#endifimport Foundation
+#endif
+
+import Foundation
 
 #if !os(Linux) && !os(Windows)
 /// NSUUID adopts DatabaseValueConvertible

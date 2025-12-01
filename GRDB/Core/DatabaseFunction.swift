@@ -5,7 +5,9 @@ import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 import SQLite3               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
-#endif/// A custom SQL function or aggregate.
+#endif
+
+/// A custom SQL function or aggregate.
 ///
 /// ## Topics
 ///

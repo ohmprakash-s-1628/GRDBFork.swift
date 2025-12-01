@@ -5,7 +5,9 @@ import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 import SQLite3               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
-#endifextension Database {
+#endif
+
+extension Database {
     /// A cache for the available database schemas.
     struct SchemaCache {
         /// The available schema identifiers, in the order of SQLite resolution:

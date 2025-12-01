@@ -5,7 +5,9 @@ import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 import SQLite3               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
-#endif/// A key that is used to decode a value in a row
+#endif
+
+/// A key that is used to decode a value in a row
 @usableFromInline
 enum RowKey: Hashable, Sendable {
     /// A column name

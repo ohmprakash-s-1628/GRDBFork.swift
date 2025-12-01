@@ -6,7 +6,9 @@ import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
 import SQLite3               // ← Custom user-provided sqlite build
 #else
 import SQLite3               // ← System SQLite
-#endifimport Foundation
+#endif
+
+import Foundation
 
 /// The virtual table module for the FTS5 full-text engine.
 ///
