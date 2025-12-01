@@ -35,7 +35,7 @@ if ProcessInfo.processInfo.environment["SPI_BUILDER"] == "1" {
 
 
 let package = Package(
-    name: "GRDBCustom",
+    name: "GRDBFork",
     defaultLocalization: "en", // for tests
     platforms: [
         .iOS(.v13),
