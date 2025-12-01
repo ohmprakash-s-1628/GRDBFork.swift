@@ -19,7 +19,7 @@ if ProcessInfo.processInfo.environment["SQLITE_ENABLE_PREUPDATE_HOOK"] == "1" {
 
 //SQLCipher-enabled SQLite provider
 dependencies.append(
-    .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", from: "4.11.0")
+    .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", branch: "master")
 )
 
 
