@@ -1,13 +1,12 @@
 #if SQLITE_ENABLE_SNAPSHOT || (!GRDBCUSTOMSQLITE && !GRDBCIPHER)
 // Import C SQLite functions
 #if GRDBCIPHER
-import SQLCipher
-#elseif SWIFT_PACKAGE
-import GRDBSQLite
-#elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
-import SQLite3
-#endif
-/// An instance of WALSnapshot records the state of a WAL mode database for some
+import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
+#elseif GRDBCUSTOMSQLITE
+import SQLite3               // ← Custom user-provided sqlite build
+#else
+import SQLite3               // ← System SQLite
+#endif/// An instance of WALSnapshot records the state of a WAL mode database for some
 /// specific point in history.
 ///
 /// We use `WALSnapshot` to help `ValueObservation` check for changes

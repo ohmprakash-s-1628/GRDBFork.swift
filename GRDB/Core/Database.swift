@@ -1,11 +1,12 @@
 // Import C SQLite functions
 #if GRDBCIPHER
-import SQLCipher
-#elseif SWIFT_PACKAGE
-import GRDBSQLite
-#elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
-import SQLite3
+import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
+#elseif GRDBCUSTOMSQLITE
+import SQLite3               // ← Custom user-provided sqlite build
+#else
+import SQLite3               // ← System SQLite
 #endif
+
 
 import Foundation
 

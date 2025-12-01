@@ -1,13 +1,12 @@
 #if SQLITE_ENABLE_FTS5
 // Import C SQLite functions
 #if GRDBCIPHER
-import SQLCipher
-#elseif SWIFT_PACKAGE
-import GRDBSQLite
-#elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
-import SQLite3
-#endif
-import Foundation
+import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
+#elseif GRDBCUSTOMSQLITE
+import SQLite3               // ← Custom user-provided sqlite build
+#else
+import SQLite3               // ← System SQLite
+#endifimport Foundation
 
 /// A low-level SQLite function that lets FTS5Tokenizer notify tokens.
 ///

@@ -1,12 +1,11 @@
 // Import C SQLite functions
 #if GRDBCIPHER
-import SQLCipher
-#elseif SWIFT_PACKAGE
-import GRDBSQLite
-#elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
-import SQLite3
-#endif
-extension Database {
+import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
+#elseif GRDBCUSTOMSQLITE
+import SQLite3               // ← Custom user-provided sqlite build
+#else
+import SQLite3               // ← System SQLite
+#endifextension Database {
     /// A cache for the available database schemas.
     struct SchemaCache {
         /// The available schema identifiers, in the order of SQLite resolution:

@@ -1,12 +1,11 @@
 // Import C SQLite functions
 #if GRDBCIPHER
-import SQLCipher
-#elseif SWIFT_PACKAGE
-import GRDBSQLite
-#elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
-import SQLite3
-#endif
-import XCTest
+import SQLCipher             // ← ALWAYS SQLCipher when GRDBCIPHER is set
+#elseif GRDBCUSTOMSQLITE
+import SQLite3               // ← Custom user-provided sqlite build
+#else
+import SQLite3               // ← System SQLite
+#endifimport XCTest
 @testable import GRDB
 
 class DatabasePoolReleaseMemoryTests: GRDBTestCase {
