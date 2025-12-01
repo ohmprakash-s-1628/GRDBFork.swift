@@ -44,14 +44,14 @@ let package = Package(
         .watchOS(.v7),
     ],
     products: [
-        .library(name: "GRDBSQLite", targets: ["GRDBSQLite"]),
+        .library(name: "GRDBForkSQLite", targets: ["GRDBForkSQLite"]),
         .library(name: "GRDB", targets: ["GRDB"]),
         .library(name: "GRDB-dynamic", type: .dynamic, targets: ["GRDB"]),
     ],
     dependencies: dependencies,
     targets: [
         .target(
-            name: "GRDBSQLite",
+            name: "GRDBForkSQLite",
             dependencies: [
                 .product(name: "CSQLCipher", package: "SQLCipher")
             ],
@@ -60,7 +60,7 @@ let package = Package(
         ),
         .target(
             name: "GRDB",
-            dependencies: ["GRDBSQLite"],
+            dependencies: ["GRDBForkSQLite"],
             path: "GRDB",
             resources: [.copy("PrivacyInfo.xcprivacy")],
             cSettings: cSettings,
