@@ -57,7 +57,9 @@ let package = Package(
             dependencies: ["SQLCipher"],
             path: "GRDB",
             resources: [.copy("PrivacyInfo.xcprivacy")],
-            cSettings: cSettings,
+            cSettings: cSettings + [
+               .define("GRDBCUSTOMSQLITE")
+            ],
             swiftSettings: swiftSettings + [
                 .define("GRDBCIPHER"),
                 .define("GRDBCUSTOMSQLITE")

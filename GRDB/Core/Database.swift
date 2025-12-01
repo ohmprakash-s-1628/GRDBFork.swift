@@ -173,6 +173,9 @@ public final class Database: CustomStringConvertible, CustomDebugStringConvertib
     ///   connection has been opened is an SQLite misuse, and has no effect.
     ///
     /// Related SQLite documentation: <https://www.sqlite.org/errlog.html>
+    ///
+
+#if !GRDBCUSTOMSQLITE
     nonisolated(unsafe) public static var logError: LogErrorFunction? {
         didSet {
             if logError != nil {
@@ -187,6 +190,7 @@ public final class Database: CustomStringConvertible, CustomDebugStringConvertib
             }
         }
     }
+#else
     
     /// The database configuration.
     public let configuration: Configuration
