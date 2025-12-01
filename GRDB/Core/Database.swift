@@ -6,6 +6,7 @@ import GRDBSQLite
 #elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
 import SQLite3
 #endif
+
 import Foundation
 
 /// A raw SQLite connection, suitable for the SQLite C API.
