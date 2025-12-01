@@ -9,39 +9,41 @@ var swiftSettings: [SwiftSetting] = [
     .define("GRDBCUSTOMSQLITE"),
     .define("SQLITE_ENABLE_FTS5"),
 ]
+
 var cSettings: [CSetting] = [
-                .define("SQLITE_HAS_CODEC", to: "1"),
-                .define("SQLITE_TEMP_STORE", to: "3"),
-                .define("SQLITE_THREADSAFE", to: "1"),
-                .define("SQLITE_CORE", to: "1"),
-            ]
+    // ⭐ FIXED — SQLCipher required flags:
+    .define("SQLITE_HAS_CODEC", to: "1"),
+    .define("SQLITE_TEMP_STORE", to: "2"),           // MUST be 2 or 3; SQLCipher enforces 2
+    .define("SQLITE_THREADSAFE", to: "1"),
+    .define("SQLITE_CORE", to: "1"),
+
+    // ⭐ SQLCipher initialization hooks:
+    .define("SQLITE_EXTRA_INIT", to: "sqlcipher_extra_init"),
+    .define("SQLITE_EXTRA_SHUTDOWN", to: "sqlcipher_extra_shutdown"),
+
+    // ⭐ Use Apple’s CommonCrypto backend instead of OpenSSL:
+    .define("SQLCIPHER_CRYPTO_CC"),
+
+    // Helps avoid warnings during build:
+    .unsafeFlags(["-Wno-shorten-64-to-32", "-Wno-unused-function"])
+]
+
 var dependencies: [PackageDescription.Package.Dependency] = []
 
-// Don't rely on those environment variables. They are ONLY testing conveniences:
-// $ SQLITE_ENABLE_PREUPDATE_HOOK=1 make test_SPM
 if ProcessInfo.processInfo.environment["SQLITE_ENABLE_PREUPDATE_HOOK"] == "1" {
     swiftSettings.append(.define("SQLITE_ENABLE_PREUPDATE_HOOK"))
     cSettings.append(.define("GRDB_SQLITE_ENABLE_PREUPDATE_HOOK"))
 }
 
-// The SPI_BUILDER environment variable enables documentation building
-// on <https://swiftpackageindex.com/groue/GRDB.swift>. See
-// <https://github.com/SwiftPackageIndex/SwiftPackageIndex-Server/issues/2122>
-// for more information.
-//
-// SPI_BUILDER also enables the `make docs-localhost` command.
 if ProcessInfo.processInfo.environment["SPI_BUILDER"] == "1" {
     dependencies.append(.package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"))
 }
 
 let package = Package(
     name: "GRDB",
-    defaultLocalization: "en", // for tests
+    defaultLocalization: "en",
     platforms: [
-        .iOS(.v13),
-        .macOS(.v10_15),
-        .tvOS(.v13),
-        .watchOS(.v7),
+        .iOS(.v13), .macOS(.v10_15), .tvOS(.v13), .watchOS(.v7),
     ],
     products: [
         .library(name: "GRDB", targets: ["GRDB"]),
@@ -49,43 +51,41 @@ let package = Package(
     ],
     dependencies: dependencies,
     targets: [
+
+        // ⭐ C SQLCipher Target
         .target(
             name: "SQLCipher",
             path: "Sources/SQLCipher",
             publicHeadersPath: ".",
             cSettings: cSettings + [
-               .define("GRDBCUSTOMSQLITE")
+                .define("GRDBCUSTOMSQLITE")
             ]
         ),
+
+        // ⭐ GRDB Swift target — imports the above custom C SQLCipher build
         .target(
             name: "GRDB",
             dependencies: ["SQLCipher"],
             path: "GRDB",
             resources: [.copy("PrivacyInfo.xcprivacy")],
             cSettings: cSettings + [
-               .define("GRDBCUSTOMSQLITE")
+                .define("GRDBCUSTOMSQLITE")
             ],
             swiftSettings: swiftSettings + [
                 .define("GRDBCIPHER"),
                 .define("GRDBCUSTOMSQLITE")
+            ]
+        ),
 
-        ]),
         .testTarget(
             name: "GRDBTests",
             dependencies: ["GRDB"],
             path: "Tests",
             exclude: [
-                "CocoaPods",
-                "Crash",
-                "CustomSQLite",
-                "GRDBManualInstall",
-                "GRDBTests/getThreadsCount.c",
-                "Info.plist",
-                "Performance",
-                "SPM",
-                "Swift6Migration",
-                "generatePerformanceReport.rb",
-                "parsePerformanceTests.rb",
+                "CocoaPods", "Crash", "CustomSQLite",
+                "GRDBManualInstall", "GRDBTests/getThreadsCount.c",
+                "Info.plist", "Performance", "SPM", "Swift6Migration",
+                "generatePerformanceReport.rb", "parsePerformanceTests.rb",
             ],
             resources: [
                 .copy("GRDBTests/Betty.jpeg"),
@@ -94,11 +94,12 @@ let package = Package(
             ],
             cSettings: cSettings,
             swiftSettings: swiftSettings + [
-                // Tests still use the Swift 5 language mode.
                 .swiftLanguageMode(.v5),
                 .enableUpcomingFeature("InferSendableFromCaptures"),
                 .enableUpcomingFeature("GlobalActorIsolatedTypesUsability"),
-            ])
+            ]
+        )
     ],
     swiftLanguageModes: [.v6]
 )
+
