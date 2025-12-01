@@ -19,11 +19,9 @@ if ProcessInfo.processInfo.environment["SQLITE_ENABLE_PREUPDATE_HOOK"] == "1" {
 
 //SQLCipher-enabled SQLite provider
 dependencies.append(
-    .package(
-        url: "https://github.com/mezhevikin/GRDB.SQLCipher.swift.git",
-        branch: "main"
-    )
+    .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", from: "4.11.0")
 )
+
 
 // The SPI_BUILDER environment variable enables documentation building
 // on <https://swiftpackageindex.com/groue/GRDB.swift>. See
@@ -37,7 +35,7 @@ if ProcessInfo.processInfo.environment["SPI_BUILDER"] == "1" {
 
 
 let package = Package(
-    name: "GRDB",
+    name: "GRDBCustom",
     defaultLocalization: "en", // for tests
     platforms: [
         .iOS(.v13),
@@ -52,13 +50,10 @@ let package = Package(
     ],
     dependencies: dependencies,
     targets: [
-        //.systemLibrary(
-          //  name: "GRDBSQLite",
-            // providers: [.apt(["libsqlite3-dev"])]),
         .target(
             name: "GRDBSQLite",
             dependencies: [
-                .product(name: "CSQLCipher", package: "GRDB.SQLCipher.swift")
+                .product(name: "CSQLCipher", package: "SQLCipher")
             ]
         ),
         .target(
