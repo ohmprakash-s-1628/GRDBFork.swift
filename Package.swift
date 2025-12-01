@@ -43,8 +43,8 @@ let package = Package(
     dependencies: dependencies,
     targets: [
         .target(
-            name: "CSQLCipher",
-            path: "Sources/CSQLCipher",
+            name: "SQLCipher",
+            path: "Sources/SQLCipher",
             publicHeadersPath: ".",
             cSettings: [
                 .define("SQLITE_HAS_CODEC", to: "1"),
@@ -54,7 +54,7 @@ let package = Package(
         ),
         .target(
             name: "GRDB",
-            dependencies: ["CSQLCipher"],
+            dependencies: ["SQLCipher"],
             path: "GRDB",
             resources: [.copy("PrivacyInfo.xcprivacy")],
             cSettings: cSettings,
