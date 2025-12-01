@@ -59,7 +59,9 @@ let package = Package(
             resources: [.copy("PrivacyInfo.xcprivacy")],
             cSettings: cSettings,
             swiftSettings: swiftSettings + [
-                .define("GRDBCIPHER")
+                .define("GRDBCIPHER"),
+                .define("GRDBCUSTOMSQLITE")
+
         ]),
         .testTarget(
             name: "GRDBTests",
