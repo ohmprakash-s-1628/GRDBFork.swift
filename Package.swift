@@ -9,7 +9,12 @@ var swiftSettings: [SwiftSetting] = [
     .define("GRDBCUSTOMSQLITE"),
     .define("SQLITE_ENABLE_FTS5"),
 ]
-var cSettings: [CSetting] = []
+var cSettings: [CSetting] = [
+                .define("SQLITE_HAS_CODEC", to: "1"),
+                .define("SQLITE_TEMP_STORE", to: "3"),
+                .define("SQLITE_THREADSAFE", to: "1"),
+                .define("SQLITE_CORE", to: "1"),
+            ]
 var dependencies: [PackageDescription.Package.Dependency] = []
 
 // Don't rely on those environment variables. They are ONLY testing conveniences:
@@ -48,10 +53,8 @@ let package = Package(
             name: "SQLCipher",
             path: "Sources/SQLCipher",
             publicHeadersPath: ".",
-            cSettings: [
-                .define("SQLITE_HAS_CODEC", to: "1"),
-                .define("SQLITE_TEMP_STORE", to: "3"),
-                .define("SQLITE_THREADSAFE", to: "1")
+            cSettings: cSettings + [
+               .define("GRDBCUSTOMSQLITE")
             ]
         ),
         .target(
