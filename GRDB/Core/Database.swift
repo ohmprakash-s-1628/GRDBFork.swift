@@ -510,6 +510,9 @@ public final class Database: CustomStringConvertible, CustomDebugStringConvertib
     
     /// This method must be called after database initialization
     func setUp() throws {
+        
+        print("SQLITE3_THREADSAFE =", sqlite3_threadsafe())
+
         setupBusyMode()
         setupDoubleQuotedStringLiterals()
         try setupForeignKeys()
